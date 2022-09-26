@@ -23,7 +23,7 @@ function VideoCanvasPhoto() {
   useEffect(() => {
     const getVideo = () => {
       navigator.mediaDevices
-        .getUserMedia({ video: { width: 400 } })
+        .getUserMedia({ video: { width: 400 }, facingMode: 'environment' })
         .then(stream => {
           let video = videoRef.current;
           video.srcObject = stream;
