@@ -7,7 +7,7 @@ import './App.css'
 function App() {
   return (
     <div className="App">
-      <div>Kappa</div>
+      <div>Kappa 0.0.1</div>
       <Video />
     </div>
   )
@@ -23,7 +23,7 @@ function VideoCanvasPhoto() {
   useEffect(() => {
     const getVideo = () => {
       navigator.mediaDevices
-        .getUserMedia({ video: { width: 400 }, facingMode: 'environment' })
+        .getUserMedia({ video: { width: 400 }, facingMode: 'user' })
         .then(stream => {
           let video = videoRef.current;
           video.srcObject = stream;
