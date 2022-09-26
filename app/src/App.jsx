@@ -7,71 +7,13 @@ import './App.css'
 function App() {
   return (
     <div className="App">
-      <div>Kappa 0.0.2</div>
+      <div>Kappa 0.0.3</div>
       <Video />
     </div>
   )
 }
 
 export default App
-
-function VideoCanvasPhoto() {
-
-  const videoRef = useRef(null)
-  const videoCanvas = useRef(null)
-
-  useEffect(() => {
-    const getVideo = () => {
-      navigator.mediaDevices
-        .getUserMedia({ video: { facingMode: 'environment', width: 400 } })
-        .then(stream => {
-          let video = videoRef.current;
-          video.srcObject = stream;
-          video.play();
-        })
-        .catch(err => {
-          console.error("error:", err);
-        });
-    }
-    getVideo()
-  }, [])
-
-  const capturePhoto = useCallback(() => {
-    const canvas = videoCanvas.current
-    const video = videoRef.current
-    canvas.width = video.videoWidth
-    canvas.height = video.videoHeight
-
-    const ctx = canvas.getContext('2d')
-    ctx.drawImage(video, 0, 0, video.videoWidth, video.videoHeight)
-
-    const img = new Image()
-    img.onload = function () {
-      ctx.drawImage(img, 0, 0, img.width, img.height, 0, 0, canvas.width, canvas.height);
-    }
-    img.src = 'https://clipartcraft.com/images/transparent-picture-background-2.png'
-
-  }, [])
-
-  useEffect(() => {
-    const refreshInterval = setInterval(() => {
-      capturePhoto()
-    }, 6);
-
-    return () => {
-      clearInterval(refreshInterval)
-    }
-  }, [capturePhoto])
-
-  return (
-    <div>
-      <button onClick={capturePhoto}>Photo</button>
-      <video hidden ref={videoRef} />
-      <canvas ref={videoCanvas} />
-    </div>
-  )
-}
-
 
 const videoStyle = {
   position: 'absolute',
@@ -98,7 +40,7 @@ function Video() {
     const getVideo = () => {
       if (!navigator.mediaDevices) return null
       navigator.mediaDevices
-        .getUserMedia({ video: { width: 400 } })
+        .getUserMedia({ video: { facingMode: 'environment', width: 400 } })
         .then(stream => {
           let video = videoRef.current;
           video.srcObject = stream;
